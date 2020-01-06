@@ -57,12 +57,6 @@ class AuthController extends Controller
         }
     }
 
-    public function logout()
-    {
-        Auth::logout();
-        return response(null, 200);
-    }
-
     public function getUser()
     {
         $user = Auth::user();

@@ -14,7 +14,7 @@
 
             <v-spacer></v-spacer>
 
-            <v-btn v-if="!$root.$data.user.id"
+            <v-btn v-if="checkLoginStatus()"
                    icon
                    to="/login">
                 <v-icon>mdi-login</v-icon>
@@ -55,15 +55,18 @@
         },
         methods: {
             checkLoginStatus() {
-                if (!this.$root.$data.hasOwnProperty('user')) {
-                    return false;
+                console.log(this.$root.$data);
+                if (this.$root.$data.user !== undefined) {
+                    if (this.$root.$data.user.token !== undefined && this.$root.$data.user.token !== null){
+                        return false;
+                    }
+                    else{
+                        return true;
+                    }
                 }
-
-                if (!this.$root.$data.user.hasOwnProperty('id')) {
-                    return false;
+                else{
+                    return true;
                 }
-
-                return this.$root.$data.user.id !== undefined;
             }
         }
     }

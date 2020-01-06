@@ -6,6 +6,7 @@ import routes from './routes';
 import Axios from 'axios';
 import colors from 'vuetify/lib/util/colors';
 import '@mdi/font/css/materialdesignicons.css';
+import { TokenHandler } from './handlers/TokenHandler';
 
 Vue.use(VueRouter);
 
@@ -39,7 +40,7 @@ router.beforeEach((to, from, next) => {
         || to.fullPath.toLowerCase() === '/signup') {
         next();
     } else {
-        let token = window.localStorage.getItem('token');
+        let token = TokenHandler.getToken();
         Axios.get('/profile', {
             headers: {'Authorization': `Bearer ${token}`}
         })
@@ -72,25 +73,33 @@ const app = new Vue({
     }),
     data: () => ({
         user: {
-            token: window.localStorage.getItem('token') || null,
+            token: TokenHandler.getToken() || null,
         },
     }),
     mounted() {
         if (this.user.hasOwnProperty('token') && this.user.token !== null) {
-            Axios.get('/api/profile', {
+            Axios.defaults.headers.common['Authorization'] = `Bearer ${this.user.token}`;
+            Axios.get('/profile', {
                 headers: {
-                    'Accept': 'application/json',
-                    'Authorization': `Bearer ${this.user.token}`,
+                    'Accept': 'application/json'
                 }
             })
-                .then(response => {
-                    if (response.status === 200) {
-                        const userData = response.data.success;
+            .then(response => {
+                if (response.status === 200) {
+                    const userData = response.data.success;
+                    if(userData != null) {
                         this.user.id = userData.id;
                         this.user.name = userData.name;
                         this.user.email = userData.email;
                     }
-                })
+                }
+
+                // remove invalid token and redirect to login page
+                if (response.status === 401 || response.status === 403) {
+                    TokenService.removeToken();
+                    router.push('/login');
+                }
+            })
         }
     }
 });

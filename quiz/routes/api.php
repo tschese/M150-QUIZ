@@ -23,7 +23,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('signUp', 'Auth\AuthController@signUp');
 Route::post('login', 'Auth\AuthController@login');
 Route::middleware('auth:api')->get('/profile','Auth\AuthController@getUser');
-Route::middleware('auth:api')->get('/logout','Auth\AuthController@logout');
 
 Route::apiResources([
     'quizzes' => 'QuizController',

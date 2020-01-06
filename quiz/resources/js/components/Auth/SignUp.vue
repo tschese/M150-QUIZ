@@ -65,6 +65,7 @@
 <script>
     import Vue from 'vue';
     import Axios from "axios";
+    import { TokenHandler } from './../../handlers/TokenHandler';
 
     export default {
         name: "SignUp",
@@ -89,7 +90,7 @@
                         if (response.status === 200) {
                             const token = response.data.success.token;
                             Axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-                            window.localStorage.setItem('token', response.data.success.token);
+                            TokenHandler.storeToken(response.data.success.token);
                             Vue.set(this.$root.$data.user, 'token', response.data.success.token);
                             return this.loadUserProfile();
                         }

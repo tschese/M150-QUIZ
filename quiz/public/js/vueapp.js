@@ -2046,15 +2046,17 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     checkLoginStatus: function checkLoginStatus() {
-      if (!this.$root.$data.hasOwnProperty('user')) {
-        return false;
-      }
+      console.log(this.$root.$data);
 
-      if (!this.$root.$data.user.hasOwnProperty('id')) {
-        return false;
+      if (this.$root.$data.user !== undefined) {
+        if (this.$root.$data.user.token !== undefined && this.$root.$data.user.token !== null) {
+          return false;
+        } else {
+          return true;
+        }
+      } else {
+        return true;
       }
-
-      return this.$root.$data.user.id !== undefined;
     }
   }
 });
@@ -2074,6 +2076,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _handlers_TokenHandler__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../../handlers/TokenHandler */ "./resources/js/handlers/TokenHandler.js");
 //
 //
 //
@@ -2119,6 +2122,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2141,7 +2145,7 @@ __webpack_require__.r(__webpack_exports__);
         if (response.status === 200) {
           var token = response.data.success.token;
           axios__WEBPACK_IMPORTED_MODULE_1___default.a.defaults.headers.common['Authorization'] = "Bearer ".concat(token);
-          window.localStorage.setItem('token', response.data.success.token);
+          _handlers_TokenHandler__WEBPACK_IMPORTED_MODULE_2__["TokenHandler"].storeToken(response.data.success.token);
           vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_this.$root.$data.user, 'token', response.data.success.token);
           return _this.loadUserProfile();
         } else {
@@ -2152,7 +2156,7 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         // TODO: notify user about failed login
         console.error(error);
-        window.localStorage.removeItem('token');
+        _handlers_TokenHandler__WEBPACK_IMPORTED_MODULE_2__["TokenHandler"].removeToken();
         _this.$root.$data.user = {};
       });
     },
@@ -2182,6 +2186,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _handlers_TokenHandler__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../../handlers/TokenHandler */ "./resources/js/handlers/TokenHandler.js");
 //
 //
 //
@@ -2195,6 +2200,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Logout",
@@ -2203,20 +2209,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     logout: function logout() {
-      var _this = this;
-
       var token = this.$root.$data.user.token;
 
       if (token !== undefined) {
-        axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/logout', {
-          headers: {
-            'Authorization': "Bearer ".concat(token),
-            'Accept': 'application/json'
-          }
-        }).then(function () {
-          window.localStorage.removeItem('token');
-          _this.$root.$data.user = {};
-        });
+        _handlers_TokenHandler__WEBPACK_IMPORTED_MODULE_1__["TokenHandler"].removeToken();
+        this.$root.$data.user = {};
       }
     }
   }
@@ -2237,6 +2234,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _handlers_TokenHandler__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../../handlers/TokenHandler */ "./resources/js/handlers/TokenHandler.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance"); }
@@ -2311,6 +2309,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 //
 
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "SignUp",
   data: function data() {
@@ -2337,7 +2336,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
         if (response.status === 200) {
           var token = response.data.success.token;
           axios__WEBPACK_IMPORTED_MODULE_1___default.a.defaults.headers.common['Authorization'] = "Bearer ".concat(token);
-          window.localStorage.setItem('token', response.data.success.token);
+          _handlers_TokenHandler__WEBPACK_IMPORTED_MODULE_2__["TokenHandler"].storeToken(response.data.success.token);
           vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_this.$root.$data.user, 'token', response.data.success.token);
           return _this.loadUserProfile();
         }
@@ -5581,7 +5580,7 @@ var render = function() {
           _vm._v(" "),
           _c("v-spacer"),
           _vm._v(" "),
-          !_vm.$root.$data.user.id
+          _vm.checkLoginStatus()
             ? _c(
                 "v-btn",
                 { attrs: { icon: "", to: "/login" } },
@@ -60338,6 +60337,31 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/handlers/TokenHandler.js":
+/*!***********************************************!*\
+  !*** ./resources/js/handlers/TokenHandler.js ***!
+  \***********************************************/
+/*! exports provided: TokenHandler */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TokenHandler", function() { return TokenHandler; });
+var storageKey = "token";
+var TokenHandler = {
+  storeToken: function storeToken(token) {
+    window.localStorage.setItem(storageKey, token);
+  },
+  getToken: function getToken() {
+    return window.localStorage.getItem(storageKey);
+  },
+  removeToken: function removeToken() {
+    window.localStorage.removeItem(storageKey);
+  }
+};
+
+/***/ }),
+
 /***/ "./resources/js/repositories/AnswerRepository.js":
 /*!*******************************************************!*\
   !*** ./resources/js/repositories/AnswerRepository.js ***!
@@ -60563,6 +60587,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuetify_lib_util_colors__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vuetify/lib/util/colors */ "./node_modules/vuetify/lib/util/colors.js");
 /* harmony import */ var _mdi_font_css_materialdesignicons_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @mdi/font/css/materialdesignicons.css */ "./node_modules/@mdi/font/css/materialdesignicons.css");
 /* harmony import */ var _mdi_font_css_materialdesignicons_css__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_mdi_font_css_materialdesignicons_css__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _handlers_TokenHandler__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./handlers/TokenHandler */ "./resources/js/handlers/TokenHandler.js");
+
 
 
 
@@ -60596,7 +60622,7 @@ router.beforeEach(function (to, from, next) {
   if (to.fullPath === '/' || to.fullPath === '/login' || to.fullPath.toLowerCase() === '/signup') {
     next();
   } else {
-    var token = window.localStorage.getItem('token');
+    var token = _handlers_TokenHandler__WEBPACK_IMPORTED_MODULE_8__["TokenHandler"].getToken();
     axios__WEBPACK_IMPORTED_MODULE_5___default.a.get('/profile', {
       headers: {
         'Authorization': "Bearer ".concat(token)
@@ -60631,7 +60657,7 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   data: function data() {
     return {
       user: {
-        token: window.localStorage.getItem('token') || null
+        token: _handlers_TokenHandler__WEBPACK_IMPORTED_MODULE_8__["TokenHandler"].getToken() || null
       }
     };
   },
@@ -60639,17 +60665,26 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     var _this = this;
 
     if (this.user.hasOwnProperty('token') && this.user.token !== null) {
-      axios__WEBPACK_IMPORTED_MODULE_5___default.a.get('/api/profile', {
+      axios__WEBPACK_IMPORTED_MODULE_5___default.a.defaults.headers.common['Authorization'] = "Bearer ".concat(this.user.token);
+      axios__WEBPACK_IMPORTED_MODULE_5___default.a.get('/profile', {
         headers: {
-          'Accept': 'application/json',
-          'Authorization': "Bearer ".concat(this.user.token)
+          'Accept': 'application/json'
         }
       }).then(function (response) {
         if (response.status === 200) {
           var userData = response.data.success;
-          _this.user.id = userData.id;
-          _this.user.name = userData.name;
-          _this.user.email = userData.email;
+
+          if (userData != null) {
+            _this.user.id = userData.id;
+            _this.user.name = userData.name;
+            _this.user.email = userData.email;
+          }
+        } // remove invalid token and redirect to login page
+
+
+        if (response.status === 401 || response.status === 403) {
+          TokenService.removeToken();
+          router.push('/login');
         }
       });
     }
@@ -60676,8 +60711,8 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/petergisler/Development/GIBZ/M150/quiz/resources/js/vueapp.js */"./resources/js/vueapp.js");
-module.exports = __webpack_require__(/*! /Users/petergisler/Development/GIBZ/M150/quiz/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! E:\M150\m150\quiz\resources\js\vueapp.js */"./resources/js/vueapp.js");
+module.exports = __webpack_require__(/*! E:\M150\m150\quiz\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -13,6 +13,7 @@
 
 <script>
     import Axios from 'axios';
+    import { TokenHandler } from './../../handlers/TokenHandler';
 
     export default {
         name: "Logout",
@@ -23,16 +24,8 @@
             logout() {
                 const token = this.$root.$data.user.token;
                 if (token !== undefined) {
-                    Axios.get('/logout', {
-                        headers: {
-                            'Authorization': `Bearer ${token}`,
-                            'Accept': 'application/json',
-                        }
-                    })
-                        .then(() => {
-                            window.localStorage.removeItem('token');
-                            this.$root.$data.user = {};
-                        });
+                    TokenHandler.removeToken();
+                    this.$root.$data.user = {};
                 }
             }
         }
