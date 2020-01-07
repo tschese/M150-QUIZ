@@ -340,6 +340,7 @@ CREATE TABLE `users` (
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
+  `score` bigint(20) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -347,11 +348,11 @@ CREATE TABLE `users` (
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
 
-INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`)
+INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `score`)
 VALUES
-	(22,'Trudi Gerster','rotkaeppchen@dunkler-wald.ch',NULL,'$2y$10$mw9uv3RTNgsub0XTsSYzM.8VzLKdzX6ZOmJhas6L4DyI/G5Pr62Ny',NULL,'2019-10-30 15:48:21','2019-10-30 15:48:21'),
-	(23,'Donald Duck','donald@entenhausen.de',NULL,'$2y$10$Y8Fgl0xb5nuzjYM2Z50Pruud/tNgSIwmjc6FR.TD4Wi4QZRxmlf/y',NULL,'2019-10-30 15:48:47','2019-10-30 15:48:47'),
-	(24,'Popeye','fucking-iron@spinach.io',NULL,'$2y$10$8iW/DswQs4yPcBVamkPFNOZUl8BCA2hYGv/VUXUZfZRGszG02W.hW',NULL,'2019-10-30 15:51:54','2019-10-30 15:51:54');
+	(22,'Trudi Gerster','rotkaeppchen@dunkler-wald.ch',NULL,'$2y$10$mw9uv3RTNgsub0XTsSYzM.8VzLKdzX6ZOmJhas6L4DyI/G5Pr62Ny',NULL,'2019-10-30 15:48:21','2019-10-30 15:48:21', 1627),
+	(23,'Donald Duck','donald@entenhausen.de',NULL,'$2y$10$Y8Fgl0xb5nuzjYM2Z50Pruud/tNgSIwmjc6FR.TD4Wi4QZRxmlf/y',NULL,'2019-10-30 15:48:47','2019-10-30 15:48:47', 29046),
+	(24,'Popeye','fucking-iron@spinach.io',NULL,'$2y$10$8iW/DswQs4yPcBVamkPFNOZUl8BCA2hYGv/VUXUZfZRGszG02W.hW',NULL,'2019-10-30 15:51:54','2019-10-30 15:51:54', 648);
 
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;

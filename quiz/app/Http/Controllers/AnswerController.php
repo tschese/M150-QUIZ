@@ -17,7 +17,6 @@ class AnswerController extends Controller
         $this->authorizeResource(Answer::class, 'answer');
     }
 
-
     /**
      * Display a listing of the resource.
      *

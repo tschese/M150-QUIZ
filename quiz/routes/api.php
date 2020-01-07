@@ -32,3 +32,4 @@ Route::apiResources([
 
 Route::get('/quizzes/{quiz}/questions', 'QuestionController@indexForQuiz');
 Route::get('/questions/{question}/answers', 'AnswerController@indexForQuestion');
+Route::get('/leaderboard', 'LeaderboardController@index');

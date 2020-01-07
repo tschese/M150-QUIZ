@@ -16,12 +16,21 @@
             </v-list-item>
 
             <v-list-item to="/quizzes">
-                    <v-list-item-action>
-                        <v-icon>mdi-home</v-icon>
-                    </v-list-item-action>
-                    <v-list-item-content>
-                        <v-list-item-title>Quizzes</v-list-item-title>
-                    </v-list-item-content>
+                <v-list-item-action>
+                    <v-icon>mdi-forum</v-icon>
+                </v-list-item-action>
+                <v-list-item-content>
+                    <v-list-item-title>Quizzes</v-list-item-title>
+                </v-list-item-content>
+            </v-list-item>
+
+            <v-list-item to="/leaderboard">
+                <v-list-item-action>
+                    <v-icon>mdi-account-multiple</v-icon>
+                </v-list-item-action>
+                <v-list-item-content>
+                    <v-list-item-title>Leaderboard</v-list-item-title>
+                </v-list-item-content>
             </v-list-item>
 
         </v-list>

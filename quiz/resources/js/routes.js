@@ -7,6 +7,7 @@ import SignUp from "./components/Auth/SignUp";
 import QuizPlay from "./components/quiz/QuizPlay";
 import Logout from "./components/Auth/Logout";
 import Home from "./components/Home";
+import Leaderboard from "./components/leaderboard/Leaderboard";
 
 const routes = [
     {
@@ -63,6 +64,11 @@ const routes = [
             props.quizId = +props.quizId;
             return props;
         }
+    },
+    {
+        path: '/leaderboard',
+        name: "leaderboard",
+        component: Leaderboard
     }
 ];
 
