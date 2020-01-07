@@ -2145,10 +2145,6 @@ __webpack_require__.r(__webpack_exports__);
           axios__WEBPACK_IMPORTED_MODULE_1___default.a.defaults.headers.common['Authorization'] = "Bearer ".concat(token);
           _handlers_TokenHandler__WEBPACK_IMPORTED_MODULE_2__["TokenHandler"].storeToken(response.data.success.token);
           vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_this.$root.$data.user, 'token', response.data.success.token);
-          vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_this.$root.$data.user, 'id', response.data.success.id);
-          vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_this.$root.$data.user, 'name', response.data.success.name);
-          vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_this.$root.$data.user, 'email', response.data.success.email);
-          vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_this.$root.$data.user, 'score', response.data.success.score);
           return _this.loadUserProfile();
         } else {
           throw Error('Login failed');
