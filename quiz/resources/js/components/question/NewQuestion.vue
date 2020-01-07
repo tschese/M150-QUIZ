@@ -17,14 +17,14 @@
             </v-col>
         </v-row>
         <v-row v-for="(answer, index) in answers"
-               :key="index"
-               align="center">
+            :key="index"
+            align="center">
             <v-col cols="10">
                 <answer-form v-model="answers[index]"
-                             @validation="(validity) => {onAnswerValidation(index, validity);}"/>
+                            @validation="(validity) => {onAnswerValidation(index, validity);}"/>
             </v-col>
             <v-col cols="2"
-                   class="text-center">
+                class="text-center">
                 <v-btn icon @click="() => {deleteAnswer(index);}">
                     <v-icon>mdi-delete</v-icon>
                 </v-btn>
@@ -33,8 +33,8 @@
         <v-row>
             <v-col>
                 <v-btn text
-                       color="green"
-                       @click="addAnswer">
+                    color="green"
+                    @click="addAnswer">
                     <v-icon left color="green">
                         add
                     </v-icon>
@@ -42,6 +42,7 @@
                 </v-btn>
             </v-col>
         </v-row>
+
         <v-row>
             <v-col>
                 <v-btn block
@@ -67,12 +68,13 @@
     import AnswerForm from "../Answer/AnswerForm";
     import {RepositoryFactory} from "../../repositories/RepositoryFactory";
     import AnswerRepository from "../../repositories/AnswerRepository";
+    import VueSlideBar from 'vue-slide-bar';
 
     const QuestionRepository = RepositoryFactory.get('questions');
 
     export default {
         name: "NewQuestion",
-        components: {QuestionForm, AnswerForm},
+        components: {QuestionForm, AnswerForm, VueSlideBar},
         props: {
             quizId: Number
         },
@@ -82,6 +84,9 @@
             validQuestion: false,
             answers: [{answerText: '', isCorrect: false}],
             validAnswers: [],
+            slideValue: 0,
+            slider: true,
+            multiple: false,
         }),
         methods: {
             cancel() {
@@ -130,6 +135,11 @@
 
             onAnswerValidation(answerIndex, validity) {
                 this.validAnswers[answerIndex] = validity;
+            }
+        },
+        watch: {
+            slideValue: function(value){
+                this.validQuestion = true;
             }
         }
     }

@@ -27,11 +27,26 @@
         </v-row>
         <v-row v-if="quiz">
             <v-col v-if="quiz.user_id === $root.$data.user.id">
-                <v-btn :to="`/quizzes/${quiz.id}/new-question`"
-                       block>
-                    <v-icon left color="green">add</v-icon>
-                    Add question
-                </v-btn>
+                <v-menu offset-y>
+                    <template v-slot:activator="{ on }">
+                    <v-btn
+                        block
+                        v-on="on"
+                    >
+                        <v-icon left color="green">add</v-icon>
+                        Dropdown
+                    </v-btn>
+                    </template>
+                    <v-list>
+                    <v-list-item
+                        v-for="(item) in items"
+                        :key="item.name"
+                        :to="`/quizzes/${quiz.id}/${item.name}`"
+                    >
+                    <v-list-item-title>{{ item.title }}</v-list-item-title>
+                    </v-list-item>
+                    </v-list>
+                </v-menu>
             </v-col>
             <v-col>
                 <v-btn :to="`/quizzes/${quiz.id}/play`"
@@ -60,6 +75,10 @@
             loading: false,
             quiz: null,
             questions: [],
+            items: [
+                { title: 'Multiple Choice Question' , name: 'new-question'},
+                { title: 'Slider Question', name: 'slider-question'},
+            ],
         }),
         created() {
             this.fetchData();
