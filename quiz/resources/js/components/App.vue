@@ -55,7 +55,6 @@
         },
         methods: {
             checkLoginStatus() {
-                console.log(this.$root.$data);
                 if (this.$root.$data.user !== undefined) {
                     if (this.$root.$data.user.token !== undefined && this.$root.$data.user.token !== null){
                         return false;

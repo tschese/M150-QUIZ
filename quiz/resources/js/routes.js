@@ -8,6 +8,7 @@ import SignUp from "./components/Auth/SignUp";
 import QuizPlay from "./components/quiz/QuizPlay";
 import Logout from "./components/Auth/Logout";
 import Home from "./components/Home";
+import Leaderboard from "./components/leaderboard/Leaderboard";
 
 import test from "./components/question/test";
 
@@ -78,6 +79,7 @@ const routes = [
         }
     },
     {
+<<<<<<< HEAD
         path: '/quizzes/:quizzId/slider-question',
         name: 'add question with slider to quiz',
         component: SliderQuestion,
@@ -86,6 +88,11 @@ const routes = [
             props.quizId = +props.quizId;
             return props;
         }
+=======
+        path: '/leaderboard',
+        name: "leaderboard",
+        component: Leaderboard
+>>>>>>> 2bf06b40d045eb5b915a72de8326d7b9f323128e
     }
 ];
 

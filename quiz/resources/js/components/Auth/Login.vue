@@ -90,6 +90,7 @@
                         Vue.set(this.$root.$data.user, 'id', userData.id);
                         Vue.set(this.$root.$data.user, 'name', userData.name);
                         Vue.set(this.$root.$data.user, 'email', userData.email);
+                        Vue.set(this.$root.$data.user, 'score', userData.score);
                     })
             }
         }

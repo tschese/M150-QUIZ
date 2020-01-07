@@ -22,6 +22,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('signUp', 'Auth\AuthController@signUp');
 Route::post('login', 'Auth\AuthController@login');
+Route::post('/leaderboard/addScore', 'LeaderboardController@addScore');
 Route::middleware('auth:api')->get('/profile','Auth\AuthController@getUser');
 
 Route::apiResources([
@@ -32,3 +33,4 @@ Route::apiResources([
 
 Route::get('/quizzes/{quiz}/questions', 'QuestionController@indexForQuiz');
 Route::get('/questions/{question}/answers', 'AnswerController@indexForQuestion');
+Route::get('/leaderboard', 'LeaderboardController@index');

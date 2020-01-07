@@ -122,6 +122,7 @@
     const QuizRepository = RepositoryFactory.get('quizzes');
     const QuestionRepository = RepositoryFactory.get('questions');
     const AnswerRepository = RepositoryFactory.get('answers');
+    const LeaderboardRepository = RepositoryFactory.get('leaderboard');
 
     export default {
         name: "QuizPlay",
@@ -214,6 +215,10 @@
                 if (this.isCorrectAnswer(question.id, answerId)) {
                     this.pointsSum += this.points;
                 }
+
+                if (this.step === this.questions.length) {
+                    this.submitScore();
+                }
             },
 
             isCorrectAnswer(questionId, answerId) {
@@ -222,6 +227,12 @@
                 };
                 const correctAnswers = this.answers[questionId].filter(correctAnswerFilter);
                 return correctAnswers.length > 0;
+            },
+
+            submitScore() {
+                if (this.pointsSum >= 0) {
+                    LeaderboardRepository.submitScore(this.pointsSum, this.$root.$data.user.id);
+                }
             },
 
             replay() {

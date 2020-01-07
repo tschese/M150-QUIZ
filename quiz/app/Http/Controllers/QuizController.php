@@ -16,7 +16,6 @@ class QuizController extends Controller
         $this->authorizeResource(Quiz::class, 'quiz');
     }
 
-
     /**
      * Display a listing of the resource.
      *
