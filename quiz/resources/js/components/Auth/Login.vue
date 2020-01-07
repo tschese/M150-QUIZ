@@ -67,6 +67,10 @@
                             Axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
                             TokenHandler.storeToken(response.data.success.token);
                             Vue.set(this.$root.$data.user, 'token', response.data.success.token);
+                            Vue.set(this.$root.$data.user, 'id', response.data.success.id);
+                            Vue.set(this.$root.$data.user, 'name', response.data.success.name);
+                            Vue.set(this.$root.$data.user, 'email', response.data.success.email);
+                            Vue.set(this.$root.$data.user, 'score', response.data.success.score);
                             return this.loadUserProfile();
                         } else {
                             throw Error('Login failed');
@@ -90,6 +94,7 @@
                         Vue.set(this.$root.$data.user, 'id', userData.id);
                         Vue.set(this.$root.$data.user, 'name', userData.name);
                         Vue.set(this.$root.$data.user, 'email', userData.email);
+                        Vue.set(this.$root.$data.user, 'score', userData.score);
                     })
             }
         }

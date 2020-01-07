@@ -70,7 +70,6 @@
                             let users = response.data;
                             users.sort((a,b) => (a.score > b.score) ? -1 : ((b.score > a.score) ? 1 : 0));
                             this.users = users;
-                            console.log(response);
                         } else {
                             throw Error("Failed loading leaderboard.");
                         }

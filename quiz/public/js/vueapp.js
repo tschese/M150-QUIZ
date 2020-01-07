@@ -2145,6 +2145,10 @@ __webpack_require__.r(__webpack_exports__);
           axios__WEBPACK_IMPORTED_MODULE_1___default.a.defaults.headers.common['Authorization'] = "Bearer ".concat(token);
           _handlers_TokenHandler__WEBPACK_IMPORTED_MODULE_2__["TokenHandler"].storeToken(response.data.success.token);
           vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_this.$root.$data.user, 'token', response.data.success.token);
+          vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_this.$root.$data.user, 'id', response.data.success.id);
+          vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_this.$root.$data.user, 'name', response.data.success.name);
+          vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_this.$root.$data.user, 'email', response.data.success.email);
+          vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_this.$root.$data.user, 'score', response.data.success.score);
           return _this.loadUserProfile();
         } else {
           throw Error('Login failed');
@@ -2166,6 +2170,7 @@ __webpack_require__.r(__webpack_exports__);
         vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_this2.$root.$data.user, 'id', userData.id);
         vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_this2.$root.$data.user, 'name', userData.name);
         vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_this2.$root.$data.user, 'email', userData.email);
+        vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_this2.$root.$data.user, 'score', userData.score);
       });
     }
   }
@@ -2368,6 +2373,7 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
         vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_this2.$root.$data.user, 'id', userData.id);
         vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_this2.$root.$data.user, 'name', userData.name);
         vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_this2.$root.$data.user, 'email', userData.email);
+        vue__WEBPACK_IMPORTED_MODULE_0___default.a.set(_this2.$root.$data.user, 'score', userData.score);
       });
     }
   }
@@ -2492,7 +2498,6 @@ var LeaderboardRepository = _repositories_RepositoryFactory__WEBPACK_IMPORTED_MO
             return a.score > b.score ? -1 : b.score > a.score ? 1 : 0;
           });
           _this.users = users;
-          console.log(response);
         } else {
           throw Error("Failed loading leaderboard.");
         }
@@ -3286,6 +3291,7 @@ __webpack_require__.r(__webpack_exports__);
 var QuizRepository = _repositories_RepositoryFactory__WEBPACK_IMPORTED_MODULE_0__["RepositoryFactory"].get('quizzes');
 var QuestionRepository = _repositories_RepositoryFactory__WEBPACK_IMPORTED_MODULE_0__["RepositoryFactory"].get('questions');
 var AnswerRepository = _repositories_RepositoryFactory__WEBPACK_IMPORTED_MODULE_0__["RepositoryFactory"].get('answers');
+var LeaderboardRepository = _repositories_RepositoryFactory__WEBPACK_IMPORTED_MODULE_0__["RepositoryFactory"].get('leaderboard');
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "QuizPlay",
   props: {
@@ -3379,6 +3385,10 @@ var AnswerRepository = _repositories_RepositoryFactory__WEBPACK_IMPORTED_MODULE_
       if (this.isCorrectAnswer(question.id, answerId)) {
         this.pointsSum += this.points;
       }
+
+      if (this.step === this.questions.length) {
+        this.submitScore();
+      }
     },
     isCorrectAnswer: function isCorrectAnswer(questionId, answerId) {
       var correctAnswerFilter = function correctAnswerFilter(answer) {
@@ -3387,6 +3397,11 @@ var AnswerRepository = _repositories_RepositoryFactory__WEBPACK_IMPORTED_MODULE_
 
       var correctAnswers = this.answers[questionId].filter(correctAnswerFilter);
       return correctAnswers.length > 0;
+    },
+    submitScore: function submitScore() {
+      if (this.pointsSum >= 0) {
+        LeaderboardRepository.submitScore(this.pointsSum, this.$root.$data.user.id);
+      }
     },
     replay: function replay() {
       var _this3 = this;
@@ -60818,6 +60833,13 @@ var resource = '/leaderboard';
 /* harmony default export */ __webpack_exports__["default"] = ({
   get: function get() {
     return axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("".concat(resource, "/"));
+  },
+  submitScore: function submitScore(points, userId) {
+    var data = {
+      'points': points,
+      'userId': userId
+    };
+    return axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("".concat(resource, "/addScore"), data);
   }
 });
 
