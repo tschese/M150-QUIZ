@@ -58,16 +58,6 @@ const routes = [
             return props;
         }
     },
-    // {
-    //     path: '/alsdkjf',
-    //     name: 'add question with slider to quiz',
-    //     componente: SliderQuestion,
-    //     // props: (route) => {
-    //     //     const props = {...route.params};
-    //     //     props.quizId = +props.quizId;
-    //     //     return props;
-    //     // }
-    // },
     {
         path: '/quizzes/:quizId/play',
         name: 'play quiz',
@@ -79,7 +69,7 @@ const routes = [
         }
     },
     {
-        path: '/quizzes/:quizzId/slider-question',
+        path: '/quizzes/:quizId/slider-question',
         name: 'add question with slider to quiz',
         component: SliderQuestion,
         props: (route) => {
