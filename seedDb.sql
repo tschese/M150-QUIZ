@@ -263,6 +263,7 @@ CREATE TABLE `questions` (
   `quiz_id` bigint(20) unsigned NOT NULL,
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `questionText` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -275,22 +276,22 @@ LOCK TABLES `questions` WRITE;
 
 INSERT INTO `questions` (`id`, `quiz_id`, `title`, `questionText`, `created_at`, `updated_at`)
 VALUES
-	(9,10,'Cheese and Chocolate','What\'s the capital of Switzerland?','2019-10-25 04:13:40','2019-10-25 04:13:40'),
-	(10,10,'Do you like Pizza?','What\' the capital of Italy?','2019-10-25 04:15:22','2019-10-25 04:15:22'),
-	(11,10,'Baguette anyone?','What\'s the capital of France?','2019-10-25 04:16:37','2019-10-25 04:16:37'),
-	(12,10,'Smørrebrød','What\'s the capital of Danmark?','2019-10-25 04:18:52','2019-10-25 04:18:52'),
-	(13,10,'A Pils for you?','What\'s the capital of Czech Republic','2019-10-25 04:32:32','2019-10-25 04:32:32'),
-	(16,13,'Just before the internet came','What was the technical foundation of the internet?','2019-10-30 15:11:34','2019-10-30 15:11:34'),
-	(17,13,'Birth of the e-mail','In which year was the first e-mail sent? (By the way: The inventor of the e-mail sent his first e-mail to... himself!)','2019-10-30 15:14:04','2019-10-30 15:14:04'),
-	(18,13,'Birth of the SPAM e-mail','Seven years after the invention of the e-mail, in 1978, the first spam e-mail was sent. But: Why is ist called \"spam\"?','2019-10-30 15:18:26','2019-10-30 15:18:26'),
-	(19,13,'Swiss made','At which swiss institution was the world wide web (www) developed?','2019-10-30 15:21:05','2019-10-30 15:21:05'),
-	(20,13,'Giants of today','Which of these internet companies is the oldest?','2019-10-30 15:30:22','2019-10-30 15:30:22'),
-	(21,13,'News? Fake News? Bubble?','In which country is Facebook more often visited than Google?','2019-10-30 15:35:27','2019-10-30 15:35:27'),
-	(22,14,'Zero chance?','Click the number zero!','2019-10-30 15:37:25','2019-10-30 15:37:25'),
-	(23,14,'Hungry? A Pi for you?','Which number is the smallest?','2019-10-30 15:40:31','2019-10-30 15:40:31'),
-	(24,14,'Ordeeeeeeer!','Which is the first letter in latin alphabet?','2019-10-30 15:41:41','2019-10-30 15:41:41'),
-	(25,14,'ASCII','Which character has the smallest ASCII value?','2019-10-30 15:43:36','2019-10-30 15:43:36'),
-	(26,14,'Systematic numbering','Which number system has more different digits?','2019-10-30 15:45:18','2019-10-30 15:45:18');
+	(9,10,'Cheese and Chocolate','What\'s the capital of Switzerland?','radio','2019-10-25 04:13:40','2019-10-25 04:13:40'),
+	(10,10,'Do you like Pizza?','What\' the capital of Italy?','radio','2019-10-25 04:15:22','2019-10-25 04:15:22'),
+	(11,10,'Baguette anyone?','What\'s the capital of France?','radio','2019-10-25 04:16:37','2019-10-25 04:16:37'),
+	(12,10,'Smørrebrød','What\'s the capital of Danmark?','radio','2019-10-25 04:18:52','2019-10-25 04:18:52'),
+	(13,10,'A Pils for you?','What\'s the capital of Czech Republic','radio','2019-10-25 04:32:32','2019-10-25 04:32:32'),
+	(16,13,'Just before the internet came','What was the technical foundation of the internet?','radio','2019-10-30 15:11:34','2019-10-30 15:11:34'),
+	(17,13,'Birth of the e-mail','In which year was the first e-mail sent? (By the way: The inventor of the e-mail sent his first e-mail to... himself!)','radio','2019-10-30 15:14:04','2019-10-30 15:14:04'),
+	(18,13,'Birth of the SPAM e-mail','Seven years after the invention of the e-mail, in 1978, the first spam e-mail was sent. But: Why is ist called \"spam\"?','radio','2019-10-30 15:18:26','2019-10-30 15:18:26'),
+	(19,13,'Swiss made','At which swiss institution was the world wide web (www) developed?','radio','2019-10-30 15:21:05','2019-10-30 15:21:05'),
+	(20,13,'Giants of today','Which of these internet companies is the oldest?','radio','2019-10-30 15:30:22','2019-10-30 15:30:22'),
+	(21,13,'News? Fake News? Bubble?','In which country is Facebook more often visited than Google?','radio','2019-10-30 15:35:27','2019-10-30 15:35:27'),
+	(22,14,'Zero chance?','Click the number zero!','radio','2019-10-30 15:37:25','2019-10-30 15:37:25'),
+	(23,14,'Hungry? A Pi for you?','Which number is the smallest?','radio','2019-10-30 15:40:31','2019-10-30 15:40:31'),
+	(24,14,'Ordeeeeeeer!','Which is the first letter in latin alphabet?','radio','2019-10-30 15:41:41','2019-10-30 15:41:41'),
+	(25,14,'ASCII','Which character has the smallest ASCII value?','radio','2019-10-30 15:43:36','2019-10-30 15:43:36'),
+	(26,14,'Systematic numbering','Which number system has more different digits?','radio','2019-10-30 15:45:18','2019-10-30 15:45:18');
 
 /*!40000 ALTER TABLE `questions` ENABLE KEYS */;
 UNLOCK TABLES;
