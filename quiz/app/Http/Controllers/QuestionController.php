@@ -45,13 +45,15 @@ class QuestionController extends Controller
         $request->validate([
             'quiz_id' => 'required',
             'title' => 'required',
-            'questionText' => 'required'
+            'questionText' => 'required',
+            'type' => 'required'
         ]);
 
         $question = new Question([
             'quiz_id' => $request->get('quiz_id'),
             'title' => $request->get('title'),
             'questionText' => $request->get('questionText'),
+            'type' => $request->get('type'),
         ]);
 
         $question->save();

@@ -10,8 +10,6 @@ import Logout from "./components/Auth/Logout";
 import Home from "./components/Home";
 import Leaderboard from "./components/leaderboard/Leaderboard";
 
-import test from "./components/question/test";
-
 const routes = [
     {
         path: '/',

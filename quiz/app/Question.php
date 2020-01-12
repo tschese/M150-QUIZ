@@ -12,6 +12,7 @@ class Question extends Model
         'quiz_id',
         'title',
         'questionText',
+        'type',
     ];
 
     public function scopeOfQuiz(Builder $query, Quiz $quiz)

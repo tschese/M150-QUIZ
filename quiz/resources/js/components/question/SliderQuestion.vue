@@ -77,6 +77,7 @@
             async saveQuestion() {
                 this.requestPending = true;
                 this.formData.quiz_id = this.quizId;    // Add quiz id to question!
+                this.formData.type = 'slider';
                 QuestionRepository.createQuestion(this.formData)
                     .then(response => {
                         if (response.status === 200) {
