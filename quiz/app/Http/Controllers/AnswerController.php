@@ -33,10 +33,11 @@ class AnswerController extends Controller
     public function indexForQuestion(Question $question)
     {
         $answers = Answer::ofQuestion($question);
+        if (count($answers) > 0) {
+            return response($answers);
+        }
         $sliderAnswers = SliderAnswer::ofQuestion($question);
-        $content = array($answers);
-        array_push($content, $sliderAnswers);
-        return response($content);
+        return response($sliderAnswers);
     }
 
     /**

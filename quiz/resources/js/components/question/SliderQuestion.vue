@@ -97,7 +97,7 @@
                         answer.correctValue = this.correctValue;
                         answer.question_id = questionId;
                         console.log(answer);
-                        //return AnswerRepository.createSliderAnswer(this.formData);
+                        return AnswerRepository.createSliderAnswer(answer);
                     })
                     .then(() => {
                         this.$router.push(`/quizzes/${this.quizId}`)

@@ -49,7 +49,7 @@
                                            :key ="question.quizId">
                             <p class="font-weight-bold">{{ question.questionText }}</p>
 
-                            <div v-if="question.type==='radio-button'">
+                            <div v-if="question.type==='radio'">
                                 <v-radio-group class="ml-2"
                                             v-model="results[question.id].answerId"
                                             :mandatory="false"
@@ -64,7 +64,7 @@
                             </div>
 
                             <div v-if="question.type==='slider'">
-                                <VueSlideBar v-model="slideValue" :min="0" :max="100" /><br>
+                                <!-- <VueSlideBar v-model="slideValue" :min="answers[question.id].min" :max="answers[question.id].max" /><br> -->
                             </div>
 
                             <v-progress-linear :value="points"
@@ -194,7 +194,6 @@
                     .then(response => {
                             if (response.status === 200) {
                                 this.questions = response.data;
-                                console.log(this.questions);
                                 this.questions.forEach(question => {
                                     Vue.set(this.results, question.id, {
                                         answerId: null,
@@ -205,14 +204,26 @@
                             }
                         }
                     )
-                    .then(questions => Promise.all(questions.map(question => {
-                        return AnswerRepository.getForQuestion(question.id);
-                    })))
+                    .then(questions =>{
+                        return Promise.all(questions.map(question => {
+                            return AnswerRepository.getForQuestion(question.id);
+                        }))
+                    })
                     .then(answers => {
+                        console.log(answers);
                         answers.forEach((answer, index) => {
-                            this.answers[this.questions[index].id] = this.shuffle(answer.data);
+                            if (answer.data.min !== undefined) {
+                                let sliderAnswer;
+                                console.warn(answer.data);
+                                sliderAnswer.min = answer.data.min;
+                                sliderAnswer.max = answer.data.max;
+                                sliderAnswer.correctValue = answer.data.correctValue;
+                                this.answers[this.questions[index].id] = sliderAnswer;
+                            }
+                            else {
+                                this.answers[this.questions[index].id] = this.shuffle(answer.data);
+                            }
                         });
-
                     })
                     .finally(() => {
                         this.loading = false;
