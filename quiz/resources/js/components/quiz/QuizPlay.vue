@@ -47,17 +47,23 @@
                         <v-stepper-content :step="index + 1">
                             <p class="font-weight-bold">{{ question.questionText }}</p>
 
-                            <v-radio-group class="ml-2"
-                                           v-model="results[question.id].answerId"
-                                           :mandatory="false"
-                                           @change="tickAnswer">
-                                <v-radio v-for="answer in answers[question.id]"
-                                         :key="answer.id"
-                                         :label="answer.answerText"
-                                         :value="answer.id"
-                                         :disabled="results[question.id]['answerId'] !== null || points <= 0">
-                                </v-radio>
-                            </v-radio-group>
+                            <div v-if="question.type==='radio-button'">
+                                <v-radio-group class="ml-2"
+                                            v-model="results[question.id].answerId"
+                                            :mandatory="false"
+                                            @change="tickAnswer">
+                                    <v-radio v-for="answer in answers[question.id]"
+                                            :key="answer.id"
+                                            :label="answer.answerText"
+                                            :value="answer.id"
+                                            :disabled="results[question.id]['answerId'] !== null || points <= 0">
+                                    </v-radio>
+                                </v-radio-group>
+                            </div>
+
+                            <div v-if="question.type==='slider'">
+                                <VueSlideBar v-model="slideValue" :min="0" :max="100" /><br>
+                            </div>
 
                             <v-progress-linear :value="points"
                                                color="green"
@@ -182,6 +188,7 @@
                     .then(response => {
                             if (response.status === 200) {
                                 this.questions = response.data;
+                                console.log(this.questions);
                                 this.questions.forEach(question => {
                                     Vue.set(this.results, question.id, {
                                         answerId: null,

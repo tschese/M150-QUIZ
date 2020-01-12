@@ -34,7 +34,7 @@
                         v-on="on"
                     >
                         <v-icon left color="green">add</v-icon>
-                        Dropdown
+                        New Question
                     </v-btn>
                     </template>
                     <v-list>
