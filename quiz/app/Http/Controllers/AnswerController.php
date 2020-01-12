@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Answer;
 use App\Question;
+use App\SliderAnswer;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AnswerController extends Controller
 {
@@ -31,7 +33,10 @@ class AnswerController extends Controller
     public function indexForQuestion(Question $question)
     {
         $answers = Answer::ofQuestion($question);
-        return response($answers);
+        $sliderAnswers = SliderAnswer::ofQuestion($question);
+        $content = array($answers);
+        array_push($content, $sliderAnswers);
+        return response($content);
     }
 
     /**
@@ -55,6 +60,33 @@ class AnswerController extends Controller
         ]);
 
         $answer->save();
+
+        return response(null, 201);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function storeSliderAnswer(Request $request)
+    {
+        $request->validate([
+            'question_id' => 'required',
+            'correctValue' => 'required',
+            'min' => 'required',
+            'max' => 'required',
+        ]);
+
+        $sliderAnswer = new SliderAnswer([
+            'question_id' => $request->get('question_id'),
+            'correctValue' => $request->get('correctValue'),
+            'min' => $request->get('min'),
+            'max' => $request->get('max'),
+        ]);
+
+        $sliderAnswer->save();
 
         return response(null, 201);
     }

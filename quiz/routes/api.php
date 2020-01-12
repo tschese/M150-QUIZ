@@ -23,6 +23,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('signUp', 'Auth\AuthController@signUp');
 Route::post('login', 'Auth\AuthController@login');
 Route::post('/leaderboard/addScore', 'LeaderboardController@addScore');
+Route::post('/answers/addSliderAnswer', 'AnswerController@storeSliderAnswer');
 Route::middleware('auth:api')->get('/profile','Auth\AuthController@getUser');
 
 Route::apiResources([

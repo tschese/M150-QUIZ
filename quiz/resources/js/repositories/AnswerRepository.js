@@ -18,4 +18,8 @@ export default {
     createAnswer(payload) {
         return Repository.post(`${resource}`, payload);
     },
+
+    createSliderAnswer(payload) {
+        return Repository.post(`${resource}/addSliderAnswer`, payload);
+    }
 }

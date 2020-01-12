@@ -13,21 +13,25 @@
         <v-row>
             <v-col>
                 <question-form v-model="formData"
-                               @validation="onQuestionValidation"
+                                @validation="onQuestionValidation"
                                :disable-fields="requestPending"/>
             </v-col>
         </v-row>
-        <!-- <v-row>
+
+        <v-row>
             <v-col>
-                <VueSlideBar v-model="slideValue" :min="0" :max="100" /><br>
+                <p>Min value: </p> <vs-input v-model="min"/>
             </v-col>
-        </v-row> -->
-        <v-row>
-            <p>Min value: </p> <vs-input v-model="minValue"/>
+
+            <v-col>
+                <p>Max value: </p> <vs-input v-model="max"/>
+            </v-col>
+
+            <v-col>
+                <p>Correct value: </p> <vs-input v-model="correctValue"/>
+            </v-col>
         </v-row>
-        <v-row>
-            <p>Max value: </p> <vs-input v-model="maxValue"/>
-        </v-row>
+    
         <v-row>
             <v-col>
                 <v-btn block
@@ -53,6 +57,8 @@
     import VueSlideBar from "vue-slide-bar";
     import Vue from 'vue';
     import Vuesax from 'vuesax';
+    import AnswerRepository from '../../repositories/AnswerRepository';
+    import QuestionRepository from '../../repositories/QuestionRepository';
 
     Vue.use(Vuesax);
 
@@ -66,9 +72,9 @@
             formData: {},
             requestPending: false,
             validQuestion: false,
-            minValue: 0,
-            maxValue: 100,
-            slideValue: 0,
+            min: 0,
+            max: 100,
+            correctValue: 0,
         }),
         methods: {
             cancel() {
@@ -77,7 +83,7 @@
             async saveQuestion() {
                 this.requestPending = true;
                 this.formData.quiz_id = this.quizId;    // Add quiz id to question!
-                this.formData.type = 'slider';
+                this.formData.type = 'slider';          // Add question type.
                 QuestionRepository.createQuestion(this.formData)
                     .then(response => {
                         if (response.status === 200) {
@@ -85,10 +91,13 @@
                         }
                     })
                     .then(questionId => {
-                        Promise.all(this.answers.map(answer => {
-                            answer.question_id = questionId;
-                            return AnswerRepository.createAnswer(answer);
-                        }));
+                        let answer = {};
+                        answer.min = this.min;
+                        answer.max = this.max;
+                        answer.correctValue = this.correctValue;
+                        answer.question_id = questionId;
+                        console.log(answer);
+                        //return AnswerRepository.createSliderAnswer(this.formData);
                     })
                     .then(() => {
                         this.$router.push(`/quizzes/${this.quizId}`)
