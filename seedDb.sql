@@ -274,7 +274,7 @@ CREATE TABLE `questions` (
 LOCK TABLES `questions` WRITE;
 /*!40000 ALTER TABLE `questions` DISABLE KEYS */;
 
-INSERT INTO `questions` (`id`, `quiz_id`, `title`, `questionText`, `created_at`, `updated_at`)
+INSERT INTO `questions` (`id`, `quiz_id`, `title`, `questionText`, `type`, `created_at`, `updated_at`)
 VALUES
 	(9,10,'Cheese and Chocolate','What\'s the capital of Switzerland?','radio','2019-10-25 04:13:40','2019-10-25 04:13:40'),
 	(10,10,'Do you like Pizza?','What\' the capital of Italy?','radio','2019-10-25 04:15:22','2019-10-25 04:15:22'),
