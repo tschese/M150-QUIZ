@@ -41,10 +41,12 @@
                     <template v-for="(question, index) in questions">
                         <v-stepper-step :complete="step > (index + 1)"
                                         color="green"
-                                        :step="index + 1">
+                                        :step="index + 1"
+                                        :key="question.quizId">
                             {{ question.title }}
                         </v-stepper-step>
-                        <v-stepper-content :step="index + 1">
+                        <v-stepper-content :step="index + 1"
+                                           :key ="question.quizId">
                             <p class="font-weight-bold">{{ question.questionText }}</p>
 
                             <div v-if="question.type==='radio-button'">
@@ -69,7 +71,8 @@
                                                color="green"
                                                striped
                                                rounded
-                                               height="25">
+                                               height="25"
+                                               v-if="!question.type === 'slider'">
                                 <template v-slot="{ value }">
                                     <strong class="white--text">{{ Math.ceil(value) }} points</strong>
                                 </template>
@@ -79,7 +82,7 @@
                                 <v-btn text
                                        class="ma-2"
                                        color="green"
-                                       v-if="step <= questions.length && (results[question.id].answerId !== null || points <= 0)"
+                                       v-if="step <= questions.length && (results[question.id].answerId !== null || points <= 0 || question.type === 'slider')"
                                        @click.prevent="step++">
                                     next
                                 </v-btn>
@@ -124,6 +127,7 @@
 <script>
     import {RepositoryFactory} from "../../repositories/RepositoryFactory";
     import Vue from "vue";
+    import VueSlideBar from "vue-slide-bar";
 
     const QuizRepository = RepositoryFactory.get('quizzes');
     const QuestionRepository = RepositoryFactory.get('questions');
@@ -132,6 +136,7 @@
 
     export default {
         name: "QuizPlay",
+        components: {VueSlideBar},
         props: {
             quizId: Number,
         },
@@ -147,6 +152,7 @@
             pointsSum: 0,
             maxTimeMilliseconds: 10000,
             interval: null,
+            slideValue: 0,
         }),
         created() {
             this.fetchData();
