@@ -170,6 +170,10 @@
                             this.pointsSum += 100;
                             this.slideValue = 0;
                         }
+
+                        if (this.step === this.questions.length + 1) {
+                            this.submitScore();
+                        }
                     }
 
                     const millisecondsPerIntervalStep = 100;
