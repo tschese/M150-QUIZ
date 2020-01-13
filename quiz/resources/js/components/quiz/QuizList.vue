@@ -14,8 +14,7 @@
                 <v-card tile>
                     <v-list three-line>
                         <template v-for="quiz in quizzes">
-                            <v-list-item :key="quiz.id"
-                                         :to="'/quizzes/' + quiz.id">
+                            <v-list-item :key="quiz.id">
                                 <v-list-item-content>
                                     <v-list-item-title v-text="quiz.title"></v-list-item-title>
                                     <v-list-item-subtitle v-text="quiz.description"></v-list-item-subtitle>
@@ -28,7 +27,8 @@
                                     </v-btn>
                                     <v-btn v-if="quiz.user_id === $root.$data.user.id"
                                            icon
-                                           :to="`/quizzes/delete/${quiz.id}`">
+                                           z-index="999"
+                                           @click="deleteQuiz(quiz.id)">
                                         <v-icon color="red">mdi-delete</v-icon>
                                     </v-btn>
                                     <v-btn icon
@@ -63,6 +63,7 @@
 
 <script>
     import {RepositoryFactory} from "./../../repositories/RepositoryFactory";
+import Axios from 'axios';
 
     const QuizRepository = RepositoryFactory.get('quizzes');
 
@@ -98,6 +99,18 @@
                 this.snackbarText = text;
                 this.snackbar = true;
             },
+
+            deleteQuiz(quizId) {
+                console.log(quizId);
+                Axios.post('/quizzes/delete', {
+                    quizId: quizId,
+                })
+                    .then((response) => {
+                        if (response.status === 204) {
+                            this.$router.go();
+                        }
+                });
+            }
         }
     }
 </script>

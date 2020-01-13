@@ -3,8 +3,8 @@
         <v-row>
             <v-col>
                 <p class="display-1">Create new Question with Slider</p>
-                <p class="font-italic font-weight-light">Okay, now let's get started! Write down your question and as
-                    many answers as you like. But remember - at least one answer should be marked as correct.</p>
+                <p class="font-italic font-weight-light">Okay, now let's get started! Write down your question and set a minimum, maximum and correct value for your slider.
+                </p>
                 <p class="font-italic font-weight-light">Oh, and by the way: Your questions title will be visible in the
                     quiz's overview! So refrain from giving away too much information there!</p>
             </v-col>

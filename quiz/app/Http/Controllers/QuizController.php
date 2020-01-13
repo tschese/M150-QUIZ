@@ -83,6 +83,28 @@ class QuizController extends Controller
         return response(null, 204);
     }
 
+    public function deleteQuiz(Request $request)
+    {
+        $quiz = Quiz::find($request->get('quizId'));
+
+        $questions = Question::ofQuiz($quiz);
+        foreach ($questions as $question) {
+            $answers = Answer::ofQuestion($question);
+            foreach ($answers as $answer) {
+                $answer->delete();
+            }
+            $sliderAnswers = SliderAnswer::ofQuestion($question);
+            foreach ($sliderAnswers as $sliderAnswer) {
+                $sliderAnswer->delete();
+            }
+
+            $question->delete();
+        }
+
+        $quiz->delete();
+        return response(null, 204);
+    }
+
     /**
      * Remove the specified resource from storage.
      *
