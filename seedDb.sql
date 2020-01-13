@@ -97,6 +97,24 @@ VALUES
 UNLOCK TABLES;
 
 
+# Export of table slider_answers
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `slider_answers`;
+
+CREATE TABLE `slider_answers` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `question_id` bigint(20) unsigned NOT NULL,
+  `correctValue` bigint(20) NOT NULL,
+  `min` bigint(20) NOT NULL,
+  `max` bigint(20) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `slider_answers_question_id_foreign` (`question_id`),
+  CONSTRAINT `slider_answers_question_id_foreign` FOREIGN KEY (`question_id`) REFERENCES `questions` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 # Export of table migrations
 # ------------------------------------------------------------
 

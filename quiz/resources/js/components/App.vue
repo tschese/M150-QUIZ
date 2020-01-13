@@ -20,11 +20,15 @@
                 <v-icon>mdi-login</v-icon>
             </v-btn>
 
-            <v-btn v-else
+            <div v-else>
+                <span v-if="name !== null && name !== ''">Welcome, {{name}}!</span>
+                <v-btn 
                    icon
                    to="/logout">
                 <v-icon>mdi-logout</v-icon>
             </v-btn>
+            </div>
+            
         </v-app-bar>
 
         <v-content>
@@ -49,6 +53,7 @@
         data: () => ({
             drawer: false,
             activeUser: false,
+            name,
         }),
         created() {
             this.checkLoginStatus();
@@ -57,6 +62,11 @@
             checkLoginStatus() {
                 if (this.$root.$data.user !== undefined) {
                     if (this.$root.$data.user.token !== undefined && this.$root.$data.user.token !== null){
+                        try {
+                            let name = JSON.parse(JSON.stringify(this.$root.$data.user.name));
+                            this.name = name;
+                        }
+                        catch {}
                         return false;
                     }
                     else{
