@@ -26,6 +26,11 @@
                                            :to="`/quizzes/${quiz.id}`">
                                         <v-icon color="green">edit</v-icon>
                                     </v-btn>
+                                    <v-btn v-if="quiz.user_id === $root.$data.user.id"
+                                           icon
+                                           :to="`/quizzes/delete/${quiz.id}`">
+                                        <v-icon color="red">mdi-delete</v-icon>
+                                    </v-btn>
                                     <v-btn icon
                                            :to="`/quizzes/${quiz.id}/play`">
                                         <v-icon color="green">mdi-play-circle</v-icon>

@@ -64,15 +64,14 @@
                             </div>
 
                             <div v-if="question.type==='slider'">
-                                <!-- <VueSlideBar v-model="slideValue" :min="answers[question.id].min" :max="answers[question.id].max" /><br> -->
+                                <VueSlideBar class="slider" v-model="slideValue" v-for="answer in answers[question.id]" :key="answer.id" :min="answer.min" :max="answer.max" /><br>
                             </div>
 
                             <v-progress-linear :value="points"
                                                color="green"
                                                striped
                                                rounded
-                                               height="25"
-                                               v-if="!question.type === 'slider'">
+                                               height="25">
                                 <template v-slot="{ value }">
                                     <strong class="white--text">{{ Math.ceil(value) }} points</strong>
                                 </template>
@@ -163,11 +162,18 @@
                     window.clearInterval(this.interval);
                 }
 
-                if (step > 0 && step <= this.questions.length) {
+                if (step > 0 && step <= this.questions.length + 1) {
+
+                    if (this.questions[this.step - 2] !== undefined && this.questions[this.step - 2].type === 'slider') {
+                        if (this.points > 0 && this.answers[this.questions[this.step - 2].id][0].correctValue === this.slideValue) {
+                            this.pointsSum += 100;
+                            this.slideValue = 0;
+                        }
+                    }
+
                     const millisecondsPerIntervalStep = 100;
                     const steps = this.maxTimeMilliseconds / millisecondsPerIntervalStep;
                     const pointDecrement = this.maxPoints / steps;
-
                     this.points = this.maxPoints;
 
                     this.interval = window.setInterval(() => {
@@ -262,6 +268,7 @@
                 this.points = 0;
                 this.pointsSum = 0;
                 this.step = 0;
+                this.sliderValue = 0;
                 Object.keys(this.results).forEach(key => {
                     this.results[key] = {
                         answerId: null,
@@ -292,5 +299,10 @@
 
     label {
         margin-bottom: 0;
+    }
+
+    .slider {
+        margin-left: 20px;
+        margin-right: 20px;
     }
 </style>
