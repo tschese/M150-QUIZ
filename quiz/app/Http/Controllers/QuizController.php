@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Quiz;
+use App\Question;
+use App\Answer;
+use App\SliderAnswer;
 use Illuminate\Http\Request;
 
 class QuizController extends Controller
@@ -88,6 +91,20 @@ class QuizController extends Controller
      */
     public function destroy(Quiz $quiz)
     {
+        $questions = Question::ofQuiz($quiz);
+        foreach ($questions as $question) {
+            $answers = Answer::ofQuestion($question);
+            foreach ($answers as $answer) {
+                $answer->delete();
+            }
+            $sliderAnswers = SliderAnswer::ofQuestion($question);
+            foreach ($sliderAnswers as $sliderAnswer) {
+                $sliderAnswer->delete();
+            }
+
+            $question->delete();
+        }
+
         $quiz->delete();
         return response(null, 204);
     }

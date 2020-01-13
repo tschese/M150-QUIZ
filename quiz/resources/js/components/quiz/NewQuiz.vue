@@ -66,7 +66,6 @@
             showSnackbar(text) {
                 this.snackbarText = text;
                 this.snackbar = true;
-
             },
 
             onFormValidation(validity) {

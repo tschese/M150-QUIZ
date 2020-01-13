@@ -64,15 +64,14 @@
                             </div>
 
                             <div v-if="question.type==='slider'">
-                                <!-- <VueSlideBar v-model="slideValue" :min="answers[question.id].min" :max="answers[question.id].max" /><br> -->
+                                <VueSlideBar v-for="answer in answers[question.id]" :key="answer.id" :min="answer.min" :max="answer.max"/><br>
                             </div>
 
                             <v-progress-linear :value="points"
                                                color="green"
                                                striped
                                                rounded
-                                               height="25"
-                                               v-if="!question.type === 'slider'">
+                                               height="25">
                                 <template v-slot="{ value }">
                                     <strong class="white--text">{{ Math.ceil(value) }} points</strong>
                                 </template>
@@ -162,12 +161,19 @@
                 if (this.interval > 0) {
                     window.clearInterval(this.interval);
                 }
+                if (step > 0 && step <= this.questions.length + 1) {
+                    console.log(this.step);
+                    console.log(this.questions);
+                    if (this.questions[this.step - 1] !== undefined && this.questions[this.step - 1].type !== undefined && this.questions[this.step - 1].type === 'slider') {
+                        if (this.points > 0 && this.answers[this.questions[this.step - 1].id][0].correctValue === this.slideValue) {
+                            this.pointsSum += 100;
+                            this.slideValue = 0;
+                        }
+                    }
 
-                if (step > 0 && step <= this.questions.length) {
                     const millisecondsPerIntervalStep = 100;
                     const steps = this.maxTimeMilliseconds / millisecondsPerIntervalStep;
                     const pointDecrement = this.maxPoints / steps;
-
                     this.points = this.maxPoints;
 
                     this.interval = window.setInterval(() => {
@@ -223,6 +229,7 @@
                                 this.answers[this.questions[index].id] = this.shuffle(answer.data);
                             }
                         });
+                        console.log(this.answers);
                     })
                     .finally(() => {
                         this.loading = false;
