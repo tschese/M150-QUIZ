@@ -64,7 +64,7 @@
                             </div>
 
                             <div v-if="question.type==='slider'">
-                                <VueSlideBar v-for="answer in answers[question.id]" :key="answer.id" :min="answer.min" :max="answer.max"/><br>
+                                <VueSlideBar class="slider" v-model="slideValue" v-for="answer in answers[question.id]" :key="answer.id" :min="answer.min" :max="answer.max" /><br>
                             </div>
 
                             <v-progress-linear :value="points"
@@ -161,11 +161,11 @@
                 if (this.interval > 0) {
                     window.clearInterval(this.interval);
                 }
+
                 if (step > 0 && step <= this.questions.length + 1) {
-                    console.log(this.step);
-                    console.log(this.questions);
-                    if (this.questions[this.step - 1] !== undefined && this.questions[this.step - 1].type !== undefined && this.questions[this.step - 1].type === 'slider') {
-                        if (this.points > 0 && this.answers[this.questions[this.step - 1].id][0].correctValue === this.slideValue) {
+
+                    if (this.questions[this.step - 2] !== undefined && this.questions[this.step - 2].type === 'slider') {
+                        if (this.points > 0 && this.answers[this.questions[this.step - 2].id][0].correctValue === this.slideValue) {
                             this.pointsSum += 100;
                             this.slideValue = 0;
                         }
@@ -269,6 +269,7 @@
                 this.points = 0;
                 this.pointsSum = 0;
                 this.step = 0;
+                this.sliderValue = 0;
                 Object.keys(this.results).forEach(key => {
                     this.results[key] = {
                         answerId: null,
@@ -299,5 +300,10 @@
 
     label {
         margin-bottom: 0;
+    }
+
+    .slider {
+        margin-left: 20px;
+        margin-right: 20px;
     }
 </style>
