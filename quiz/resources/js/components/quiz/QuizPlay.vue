@@ -210,7 +210,6 @@
                         }))
                     })
                     .then(answers => {
-                        console.log(answers);
                         answers.forEach((answer, index) => {
                             if (answer.data.min !== undefined) {
                                 let sliderAnswer;

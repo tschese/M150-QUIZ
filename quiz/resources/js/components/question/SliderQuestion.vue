@@ -96,7 +96,6 @@
                         answer.max = this.max;
                         answer.correctValue = this.correctValue;
                         answer.question_id = questionId;
-                        console.log(answer);
                         return AnswerRepository.createSliderAnswer(answer);
                     })
                     .then(() => {
