@@ -21,7 +21,8 @@
                         <p>You are about to start the QU!Z named <span
                                 class="font-weight-bold">{{ quiz.title }}</span>. During this quiz you'll need to
                             answer <span class="font-weight-bold">{{questions.length}} questions.</span></p>
-                        <p>The faster you answer the question, the more points you may earn. But be careful: Wrong
+                        <p>The faster you answer a radio button question, the more points you may earn.
+                            If you answer a slider question correctly within the time limit, you will always get 100 points. But be careful: Wrong
                             answers won't bring you any points at all!</p>
                         <p>The time limit for every question is <span
                                 class="font-weight-bold">{{ maxTimeMilliseconds / 1000}} seconds</span>.
