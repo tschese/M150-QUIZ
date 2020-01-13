@@ -101,15 +101,17 @@ import Axios from 'axios';
             },
 
             deleteQuiz(quizId) {
-                console.log(quizId);
-                Axios.post('/quizzes/delete', {
+                let alert = window.confirm("Are you sure you want to delete this quiz?");
+                if (alert) {
+                    Axios.post('/quizzes/delete', {
                     quizId: quizId,
-                })
-                    .then((response) => {
-                        if (response.status === 204) {
-                            this.$router.go();
-                        }
-                });
+                    })
+                        .then((response) => {
+                            if (response.status === 204) {
+                                this.$router.go();
+                            }
+                        });
+                }
             }
         }
     }
