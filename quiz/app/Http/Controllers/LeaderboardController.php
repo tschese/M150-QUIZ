@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class LeaderboardController extends Controller
 {
@@ -18,8 +17,8 @@ class LeaderboardController extends Controller
     {
         $score = $request->get('points');
         $userId = $request->get('userId');
-        $user = DB::table('users')->where('id', $userId)->first();
+        $user = User::find($userId);
         $score += $user->score;
-        DB::table('users')->where('id', $userId)->update(['score' => $score]);
+        User::whereId($userId)->update(['score' => $score]);
     }
 }
