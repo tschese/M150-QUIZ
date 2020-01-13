@@ -121,7 +121,10 @@ VALUES
 	(5,'2016_06_01_000003_create_oauth_refresh_tokens_table',1),
 	(6,'2016_06_01_000004_create_oauth_clients_table',1),
 	(7,'2016_06_01_000005_create_oauth_personal_access_clients_table',1),
-	(8,'2019_09_02_195700_initial_migration',1);
+	(8,'2019_09_02_195700_initial_migration',1),
+	(9,'2020_01_07_164733_added_score_to_users',1),
+	(10,'2020_01_12_163655_add_questiontype_to_questions',1),
+	(11,'2020_01_12_185223_create_slider_answers_table',1);
 
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 UNLOCK TABLES;
