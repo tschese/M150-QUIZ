@@ -1,3 +1,9 @@
+# Additional Functions/Fixes (Not requested in the change request):
+ - Login fix (Hard reload does not log out the user)
+ - Logout now correctly logs out the user
+ - Delete a quiz with all a associated questions and answers (Button in the quiz list next to the edit button)
+ - On first login the name of the user is shown next to the logout button
+
 # QU!Z Application
 QU!Z is an application used for educational purposes at the GIBZ Gewerblich-industrielles Bildungszentrum Zug. It's purpose is to work as an e-business application which will be extended and adapted by the students in a methodically correct and suitable approach.
 
